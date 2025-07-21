@@ -1,9 +1,11 @@
-import React from 'react';
+
+import React from "react";
 
 function App() {
   return (
-    <div>
-      <h1>Добро пожаловать в музыкальную школу!</h1>
+    <div className="container">
+      <h1>Добро пожаловать в приложение творческой лаборатории Веты Гулливер!</h1>
+      <button>Войти</button>
     </div>
   );
 }
