@@ -1,48 +1,26 @@
+'use client'
 
-'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 
-export default function Home() {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push('/select-role');
-  };
+export default function HomePage() {
+  const router = useRouter()
 
   return (
-    <main style={{
-      display: 'flex',
-      height: '100vh',
-      backgroundColor: '#FFFFFF',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'column',
-      padding: '1rem',
-      textAlign: 'center'
-    }}>
-      <h1 style={{
-        fontSize: '1.8rem',
-        maxWidth: '600px',
-        lineHeight: '1.5',
-        fontWeight: '700',
-        color: '#333333'
-      }}>
-        Добро пожаловать в приложение творческой лаборатории Веты Гулливер!
+    <main className="min-h-screen flex flex-col items-center justify-center bg-white text-[#333] px-4">
+      <Image src="/logo.png" alt="MUSIC.LAB" width={120} height={120} className="mb-6" />
+
+      <h1 className="text-2xl md:text-3xl font-semibold font-['PT Sans'] text-center text-black mb-2">
+        Творческая Лаборатория Веты Гулливер
       </h1>
-      <button onClick={handleClick} style={{
-        marginTop: '2rem',
-        backgroundColor: '#FF6F00',
-        color: '#FFFFFF',
-        padding: '0.75rem 2rem',
-        fontSize: '1rem',
-        border: 'none',
-        borderRadius: '12px',
-        cursor: 'pointer',
-        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-        transition: 'background-color 0.3s ease'
-      }}>
+
+      <Button
+        onClick={() => router.push('/role')}
+        className="mt-6 bg-[#FF6F00] hover:bg-[#e85f00] text-white text-lg rounded-2xl px-6 py-3 shadow-md transition-all"
+      >
         Войти
-      </button>
+      </Button>
     </main>
-  );
+  )
 }
