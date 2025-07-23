@@ -1,58 +1,57 @@
-'use client'
+"use client"
 
-import React from 'react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
 
-const mockSubscription = {
-  total: 8,
-  used: 5,
-  validUntil: '31.07.2025',
-  lessons: [
-    { date: '01.07.2025', comment: 'Хорошая работа на гаммах' },
-    { date: '04.07.2025', comment: 'Немного опоздал, но справился' },
-    { date: '08.07.2025', comment: '' },
-    { date: '11.07.2025', comment: 'Прошел новый этюд' },
-    { date: '15.07.2025', comment: 'Очень внимателен на уроке' },
+interface Subscription {
+  month: string
+  totalLessons: number
+  completed: number
+  missed: number
+  remaining: number
+  history: string[]
+}
+
+const mockSubscription: Subscription = {
+  month: "Июль 2025",
+  totalLessons: 8,
+  completed: 5,
+  missed: 1,
+  remaining: 2,
+  history: [
+    "03.07 – Урок прошёл ✅",
+    "05.07 – Урок прошёл ✅",
+    "08.07 – Урок отменён ❌",
+    "12.07 – Урок прошёл ✅",
+    "16.07 – Урок прошёл ✅",
+    "19.07 – Урок прошёл ✅",
   ],
 }
 
-export default function StudentSubscription() {
-  const remaining = mockSubscription.total - mockSubscription.used
+export default function SubscriptionPage() {
+  const [subscription, setSubscription] = useState<Subscription | null>(null)
+
+  useEffect(() => {
+    setSubscription(mockSubscription) // Здесь в будущем будет загрузка с сервера
+  }, [])
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-[#FF6F00] mb-4">Мой абонемент</h1>
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Абонемент на {subscription?.month}</h1>
 
-      <Card className="bg-[#FFF3E0] p-4 mb-6">
-        <p className="text-[#333] mb-2">
-          <strong>Всего занятий:</strong> {mockSubscription.total}
-        </p>
-        <p className="text-[#333] mb-2">
-          <strong>Посещено:</strong> {mockSubscription.used}
-        </p>
-        <p className="text-[#333] mb-2">
-          <strong>Осталось:</strong> {remaining}
-        </p>
-        <p className="text-[#333]">
-          <strong>Действует до:</strong> {mockSubscription.validUntil}
-        </p>
-      </Card>
-
-      <h2 className="text-xl font-semibold text-[#FF6F00] mb-3">История занятий</h2>
-      <div className="space-y-3">
-        {mockSubscription.lessons.map((lesson, index) => (
-          <Card key={index} className="p-3 bg-[#FFE0B2] text-[#333]">
-            <p><strong>{lesson.date}</strong></p>
-            <p>{lesson.comment || 'Без комментария'}</p>
-          </Card>
-        ))}
+      <div className="space-y-2 text-base">
+        <p>Всего занятий: {subscription?.totalLessons}</p>
+        <p>Пройдено: {subscription?.completed}</p>
+        <p>Отменено: {subscription?.missed}</p>
+        <p>Осталось: {subscription?.remaining}</p>
       </div>
 
-      <Link href="/student">
-        <Button className="mt-6 bg-[#FF6F00] text-white hover:bg-orange-600">Назад</Button>
-      </Link>
+      <h2 className="text-lg font-semibold mt-6 mb-2">История занятий:</h2>
+      <ul className="list-disc list-inside space-y-1">
+        {subscription?.history.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   )
 }
