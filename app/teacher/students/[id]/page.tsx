@@ -1,24 +1,33 @@
-"use client"
+// app/teacher/students/[id]/page.tsx
 
-import { useParams } from "next/navigation"
+"use client";
+
+import { useParams, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function StudentDetailPage() {
-  const { id } = useParams()
+  const router = useRouter();
+  const { id } = useParams();
 
-  return 
-    (import { useRouter, useParams } from "next/navigation"
+  // 🔸 Здесь ты позже подгрузишь реальные данные
+  const studentName = "Иван Иванов";
 
-// внутри компонента:
-const router = useRouter()
-const { id } = useParams()
+  return (
+    <div className="p-4 space-y-6">
+      <h1 className="text-2xl font-bold text-[#FF6F00]">Ученик: {studentName}</h1>
 
-const goTo = (path: string) => router.push(`/teacher/students/${id}/${path}`)
+      <div className="grid gap-4">
+        <Card onClick={() => alert("Переход в Задания")}>
+          <CardContent className="p-4">Задания</CardContent>
+        </Card>
+        <Card onClick={() => alert("Переход в Абонемент")}>
+          <CardContent className="p-4">Абонемент</CardContent>
+        </Card>
+        <Card onClick={() => alert("Переход в Достижения")}>
+          <CardContent className="p-4">Достижения</CardContent>
+        </Card>
+      </div>
 
-return (
-  <div className="mt-6 space-y-4">
-    <button onClick={() => goTo("homework")} className="w-full p-3 rounded bg-[#FF6F00] text-white">Задания</button>
-    <button onClick={() => goTo("subscription")} className="w-full p-3 rounded bg-[#FF6F00] text-white">Абонемент</button>
-    <button onClick={() => goTo("achievements")} className="w-full p-3 rounded bg-[#FF6F00] text-white">Достижения</button>
-    <button onClick={() => router.push("/teacher/students")} className="w-full p-3 rounded bg-gray-300 text-black">Назад</button>
-  </div>
-)
+      <Button
+        variant
